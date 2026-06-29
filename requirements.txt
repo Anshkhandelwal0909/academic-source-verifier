@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+requests
+rapidfuzz
+httpx
+PyPDF2
+nltk
+python-multipart
+pybtex

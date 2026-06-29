@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Source Verifier</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Academic Source Verifier</h1>
+            <p>Find, validate, and cite real academic sources for your claims.</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-target="search-view">Direct Search</button>
+            <button class="tab-btn" data-target="document-view">Document Upload</button>
+        </nav>
+
+        <main>
+            <!-- DIRECT SEARCH VIEW -->
+            <div id="search-view" class="view active-view">
+                <div class="search-container">
+                    <input type="text" id="query-input" placeholder="Enter a claim or topic (e.g., overfitting in backtests)..." autocomplete="off">
+                    <button id="search-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </div>
+
+                <div id="loading" class="hidden">
+                    <div class="spinner"></div>
+                    <p>Searching Academic Databases...</p>
+                </div>
+
+                <div id="error" class="hidden"></div>
+
+                <div id="results-container" class="hidden">
+                    <div class="results-header">
+                        <h2>Sources</h2>
+                        <span id="results-count">0 found</span>
+                    </div>
+                    <div id="results-list"></div>
+                </div>
+            </div>
+
+            <!-- DOCUMENT UPLOAD VIEW -->
+            <div id="document-view" class="view">
+                <div id="upload-zone" class="upload-zone">
+                    <input type="file" id="file-input" accept=".txt,.pdf" class="hidden">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p>Click to upload or drag and drop a document (.txt, .pdf)</p>
+                </div>
+
+                <div id="doc-loading" class="hidden">
+                    <div class="spinner"></div>
+                    <p>Uploading and analyzing document...</p>
+                </div>
+                
+                <div id="doc-progress-container" class="hidden">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <p id="progress-text" class="progress-text">Processing: 0 / 0 lines</p>
+                </div>
+
+                <div id="annotated-document" class="hidden">
+                    <!-- Lines will be streamed here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Template for a result item -->
+    <template id="result-template">
+        <div class="result-card">
+            <div class="result-header">
+                <div class="tier-badge"></div>
+                <div class="source-api-badge"></div>
+            </div>
+            <h3 class="title"></h3>
+            <div class="metadata">
+                <span class="authors"></span> &bull; <span class="year"></span> &bull; <span class="venue"></span>
+            </div>
+            <div class="metrics">
+                <span class="citation-count"></span> citations
+            </div>
+            <p class="abstract"></p>
+            <div class="citation-box">
+                <div class="citation-title">APA Citation:</div>
+                <div class="citation-text"></div>
+            </div>
+            <a href="#" target="_blank" class="url-link">View Source</a>
+        </div>
+    </template>
+    
+    <!-- Template for a document line -->
+    <template id="doc-line-template">
+        <div class="doc-line-container">
+            <div class="doc-line-text"></div>
+            <div class="doc-line-status"></div>
+            <div class="doc-line-citation hidden"></div>
+        </div>
+    </template>
+
+    <script src="script.js"></script>
+</body>
+</html>
