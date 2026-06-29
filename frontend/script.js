@@ -222,7 +222,10 @@ function startSSEStream(jobId) {
             const clone = docLineTemplate.content.cloneNode(true);
             lineEl = clone.querySelector('.doc-line-container');
             lineEl.dataset.index = lineIdx;
-            lineEl.querySelector('.doc-line-text').textContent = data.text;
+            
+            const pageInfo = data.page ? `Pg ${data.page}` : '';
+            const lineBadge = `<span style="display: inline-block; background: #e2e8f0; color: #475569; padding: 2px 6px; border-radius: 4px; font-size: 0.75em; font-family: monospace; margin-right: 8px; vertical-align: middle;">L${lineIdx + 1} ${pageInfo}</span>`;
+            lineEl.querySelector('.doc-line-text').innerHTML = `${lineBadge}${data.text}`;
             
             // Insert in correct order
             let inserted = false;
